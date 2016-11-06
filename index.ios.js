@@ -1,53 +1,50 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { AppRegistry, Navigator, Text, View, ScrollView } from 'react-native';
+import moment from 'moment';
+import Time from './app/Time';
 
-export default class MoviesOwlNative extends Component {
+class MoviesOwlNative extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {movies: []}
+  };
+
+  getMoviesFromApi() {
+    return fetch('http://moviesowl.com/api/v1/cinemas/29/movies')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        return responseJson.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  componentDidMount() {
+    console.log('fetching now');
+    this.getMoviesFromApi().then((movies) => {
+      this.setState({
+        movies: movies
+      })
+    });
+  };
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
+      <ScrollView>
+      <Text>blah blah blah new line</Text>
+      <Text>Brisbane Myer Center</Text>
+        {this.state.movies.map((movie) => {
+          return <View key={movie.id}><Text>{movie.title} {movie.tomato_meter}%</Text>
+          {movie.showings.data.map((showing) =>
+            <Time key={showing.id} startTime={showing.start_time}></Time>)
+          }
+          </View>
+        })}
+      </ScrollView>
+
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 AppRegistry.registerComponent('MoviesOwlNative', () => MoviesOwlNative);

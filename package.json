@@ -7,8 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "momentjs": "^2.0.0",
     "react": "15.3.2",
-    "react-native": "0.36.0"
+    "react-native": "0.36.0",
+    "xhr": "^2.2.2"
   },
   "jest": {
     "preset": "jest-react-native"
