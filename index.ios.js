@@ -1,53 +1,42 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+'use strict';
 
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+var React = require('react');
+var ReactNative = require('react-native');
 
-export default class MoviesOwlNative extends Component {
+var CountryPage = require('./CountryPage');
+
+var styles = ReactNative.StyleSheet.create({
+  text: {
+    color: 'black',
+    backgroundColor: 'white',
+    fontSize: 30,
+    margin: 80
+  },
+  container: {
+    flex: 1
+  }
+});
+
+
+class testClass extends React.Component {
+  render() {
+    // return React.createElement(ReactNative.Text, {style: styles.text}, "Hello World!");
+    return <ReactNative.Text style={styles.text}>Hello World (Again)</ReactNative.Text>;
+  }
+}
+
+class test2 extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+        <ReactNative.NavigatorIOS
+            style={styles.container}
+            initialRoute={{
+              title: 'Property Finder',
+              component: CountryPage
+            }}/>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
-AppRegistry.registerComponent('MoviesOwlNative', () => MoviesOwlNative);
+ReactNative.AppRegistry.registerComponent('MoviesOwlNative', function() { return test2 });
